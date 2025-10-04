@@ -1,0 +1,28 @@
+# Terraform files
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf
+override_*.tf
+*_override.tf
+
+# Local configuration files
+.terraformrc
+terraform.rc
+
+# Editor specific files
+.vscode/
+.idea/
+*.swp
+*.bak
+*~
+.DS_Store
+Thumbs.db
+
+# Operating System specific files
+.env
+

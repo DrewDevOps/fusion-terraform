@@ -1,0 +1,7 @@
+
+output "vm_ipv4_address" {
+  value = proxmox_virtual_environment_vm.ubuntu_vm.*.ipv4_addresses
+}
+output "vm_name" {
+  value = proxmox_virtual_environment_vm.ubuntu_vm.name
+}
