@@ -16,8 +16,9 @@ provider "proxmox" {
   api_token = var.virtual_environment_token
   insecure  = true
   ssh {
-    agent       = false
+    agent       = true
     username    = "root"
     private_key = file("~/.ssh/id_rsa")
   }
+  
 }

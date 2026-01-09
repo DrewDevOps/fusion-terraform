@@ -40,10 +40,10 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
     dns {
       servers = ["8.8.8.8", "1.1.1.1"]
     }
-    user_account {
-      username = "ubuntu" 
-      password = "test" 
-    }
+    # user_account {
+    #   username = "ubuntu" 
+    #   password = "test" 
+    # }
 
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
   }
