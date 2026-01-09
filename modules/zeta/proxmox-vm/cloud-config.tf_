@@ -1,0 +1,39 @@
+data "local_file" "ssh_public_key" {
+  #filename = "/root/.ssh/id_rsa.pub"
+  filename = "/Users/${var.username}/.ssh/id_rsa.pub"
+}
+
+resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = "${var.node_name}"
+
+  source_raw {
+    data = <<-EOF
+    #cloud-config
+    hostname: ${var.vm_name}
+    timezone: Africa/Accra
+    users:
+      - default
+        password: "test"
+      - name: ubuntu
+        groups:
+          - sudo
+        shell: /bin/bash
+        ssh_authorized_keys:
+          - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+Y1N0ryzMwwj36vWVlvb4Q0hITQPyIeAKbpz98m0C0qHClQEcAr7pT2cL9fIvocetzjr1IDmFcjahJBPhOOW3xCDcvEjmQj1YimUtzOFQfYJZnIkqEISf+x0SqKFUS17cNlU2lzuGAR4mKPWJoawZY1fIIaRK+0Uu7sIzcP9Ph79B1PukiJ/RAeIe+/tmFnmsdvA5CNQvqkZ7hfQoCvVNbvtSz1rKOqdWeuJdISlKK3qoutfGmijffl7CUHunZK+qr4tciv5Lez3WjHASKwCmpKbCcTaC5wZ49JCyFAxKu4rsUoiqcpNLxlNtcZ9oyNyxpy/RAzaVZpiwkxZuXGSP root@ISpve2"
+        sudo: ALL=(ALL) NOPASSWD:ALL
+    package_update: true
+    packages:
+      - qemu-guest-agent
+      - net-tools
+      - curl
+    runcmd:
+      - systemctl enable qemu-guest-agent
+      - systemctl start qemu-guest-agent
+      - echo "done" > /tmp/cloud-config.done
+    EOF
+
+    file_name = "${var.vm_name}-data-cloud-config.yaml"
+  }
+}

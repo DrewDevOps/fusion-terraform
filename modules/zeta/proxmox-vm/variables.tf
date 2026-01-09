@@ -52,3 +52,21 @@ variable "username" {
   type        = string
   description = "Username for the VM user"
 }
+
+variable "upassword" {
+  type        = string
+  description = "Password for the VM user"
+  sensitive   = true
+}
+
+variable "vm_bridge" {
+  type        = string
+  description = "Network bridge for the VM"
+  default     = "vmbr0"
+}
+
+variable "node_name" {
+  type        = string
+  description = "Proxmox node name where the VM will be created"
+  default     = "proxmox-ve"
+}

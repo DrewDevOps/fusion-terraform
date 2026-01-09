@@ -1,0 +1,34 @@
+resource "proxmox_virtual_environment_vm" "debian_vm" {
+  name       = "freeswitch-vm"
+  node_name  = "zeta"
+  vm_id      = 114
+  started    = true
+
+  clone {
+    vm_id = 900     # Template ID
+    full  = true
+  }
+
+  initialization {
+
+    ip_config {
+      ipv4 {
+        address = "102.22.27.148/29"
+        gateway = "102.22.27.145"
+      }
+    }
+
+    dns {
+      servers = ["8.8.8.8", "1.1.1.1"]
+    }
+
+    user_account {
+      username = "debian"
+      password = "yourpassword"
+    }
+
+    # user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
+    
+  }
+
+}

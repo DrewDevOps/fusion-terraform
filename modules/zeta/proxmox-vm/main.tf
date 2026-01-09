@@ -1,6 +1,8 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   name      = var.vm_name
-  node_name = "zeta"
+  node_name = var.node_name
+  tags = [ "security", "development", "firewall" ]
+  # tags = [ "AppServer", "development", "Fish"]
 
   agent {
     enabled = true
@@ -16,7 +18,7 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = "local-lvm"
-    file_id      = "local:iso/jammy-server-cloudimg-amd64.img"
+    file_id      = "local:iso/jammy-server-cloudimg-amd64.img" #"local:iso/pfSense-CE-2.6.0-RELEASE-amd64.img" #
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
@@ -35,11 +37,20 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
       }
     }
 
+    dns {
+      servers = ["8.8.8.8", "1.1.1.1"]
+    }
+    user_account {
+      username = "ubuntu" 
+      password = "test" 
+    }
+
     user_data_file_id = proxmox_virtual_environment_file.user_data_cloud_config.id
   }
 
   network_device {
-    bridge = "vmbr0"
+    bridge = var.vm_bridge
   }
+  
 
 }

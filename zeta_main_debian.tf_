@@ -1,0 +1,8 @@
+
+module "debian_vm" {
+  source = "./modules/zeta/debian-vm"
+  virtual_environment_endpoint       = var.virtual_environment_endpoint
+  virtual_environment_token          = var.virtual_environment_token
+  vm_name        = "freeswitch-vm"
+  username       =  "drew" 
+}
