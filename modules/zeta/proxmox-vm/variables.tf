@@ -70,3 +70,8 @@ variable "node_name" {
   description = "Proxmox node name where the VM will be created"
   default     = "proxmox-ve"
 }
+
+variable "ssh_keys" {
+  type = string
+  description = "Admin user's auth keys"
+}
