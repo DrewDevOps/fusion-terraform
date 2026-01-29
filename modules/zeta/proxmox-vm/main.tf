@@ -1,9 +1,10 @@
 resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
   name      = var.vm_name
   node_name = var.node_name
-  # tags = [ "proxy", "development", "bastion-server" ]
+  tags = [ "proxy", "development", "bastion-server" ]
   # tags = [ "AppServer", "development", "Fish"]
-  tags = ["PBX", "AppNetWk", "Private", "SIP", "Proxy"]
+  # tags = ["PBX", "AppNetWk", "Private", "SIP", "Proxy"]
+  # tags = ["Chatbot", "AppsNet", "AppZone", "Production"]
 
   agent {
     enabled = true
@@ -19,8 +20,8 @@ resource "proxmox_virtual_environment_vm" "ubuntu_vm" {
 
   disk {
     datastore_id = "local-lvm"
-    # file_id      = "local:iso/jammy-server-cloudimg-amd64.img" #"local:iso/pfSense-CE-2.6.0-RELEASE-amd64.img" #
-    file_id      = "local:iso/debian-12.0.0-amd64-netinst.iso"
+    file_id      = "local:iso/jammy-server-cloudimg-amd64.img" #"local:iso/pfSense-CE-2.6.0-RELEASE-amd64.img" #
+    # file_id      = "local:iso/debian-12.0.0-amd64-netinst.iso"
     interface    = "virtio0"
     iothread     = true
     discard      = "on"
